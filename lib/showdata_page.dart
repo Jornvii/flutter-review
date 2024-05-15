@@ -11,6 +11,7 @@ class ShowdataPopup extends StatefulWidget {
 class _ShowdataPopupState extends State<ShowdataPopup> {
   final TextEditingController _sysController = TextEditingController();
   final TextEditingController _diaController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   void _showPressurePopup(String sys, String dia) {
     int sysValue = int.parse(sys);
@@ -21,9 +22,9 @@ class _ShowdataPopupState extends State<ShowdataPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.circular(15),
-          // ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
           title: const Text(
             "ข้อมูลความดันโลหิต",
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -50,10 +51,11 @@ class _ShowdataPopupState extends State<ShowdataPopup> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(
-            child: Text(
-          'ข้อมูลความดันโลหิต',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )),
+          child: Text(
+            'ข้อมูลความดันโลหิต',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -65,54 +67,70 @@ class _ShowdataPopupState extends State<ShowdataPopup> {
             elevation: 8,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  TextField(
-                    controller: _sysController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'SYS (mmHg)',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: _diaController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'DIA (mmHg)',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      String sys = _sysController.text;
-                      String dia = _diaController.text;
-                      if (sys.isNotEmpty && dia.isNotEmpty) {
-                        _showPressurePopup(sys, dia);
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('กรุณากรอกค่า SYS และ DIA.')),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 101, 255, 106),
-                      shadowColor: Colors.black45,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    TextFormField(
+                      controller: _sysController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'SYS (mmHg)',
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'กรุณากรอกค่า SYS';
+                        }
+                        return null;
+                      },
                     ),
-                    child: const Text('แสดงข้อมูลความดันโลหิต'),
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: _diaController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'DIA (mmHg)',
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'กรุณากรอกค่า DIA';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          String sys = _sysController.text;
+                          String dia = _diaController.text;
+                          _showPressurePopup(sys, dia);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('กรุณากรอกค่า SYS และ DIA.'),
+                            ),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 101, 255, 106),
+                        shadowColor: Colors.black45,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text('แสดงข้อมูลความดันโลหิต'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
