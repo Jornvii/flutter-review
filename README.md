@@ -1,16 +1,14 @@
-# flutter_test_1
+<h1 align="center">Hi 👋, I'm Gvorn</h1>
 
-A new Flutter project.
 
-## Getting Started
+<img align="right" alt="coding" width="200" src="https://cdn.dribbble.com/users/698857/screenshots/2956148/final-animation.gif">
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 📫 How to reach me **chivorn.tc@gmail.com**
+
+
+
+
+<p><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=gvorn7&show_icons=true&locale=en&layout=compact" alt="gvorn7" /></p>
