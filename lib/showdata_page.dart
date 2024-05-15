@@ -21,11 +21,11 @@ class _ShowdataPopupState extends State<ShowdataPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Pressure Data"),
-          content: Text("SYS: $sys mmHg\nDIA: $dia mmHg\nCondition: $condition"),
+          title: const Text("ข้อมูลความดันโลหิต"),
+          content: Text("SYS: $sys mmHg\nDIA: $dia mmHg\nสภาวะ: $condition"),
           actions: <Widget>[
             TextButton(
-              child: const Text("OK"),
+              child: const Text("ตกลง"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -40,7 +40,7 @@ class _ShowdataPopupState extends State<ShowdataPopup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pressure Data Input'),
+        title: const Text('ข้อมูลความดันโลหิต'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -69,13 +69,12 @@ class _ShowdataPopupState extends State<ShowdataPopup> {
                 if (sys.isNotEmpty && dia.isNotEmpty) {
                   _showPressurePopup(sys, dia);
                 } else {
-                  // Optionally, show an error message if fields are empty
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please enter both SYS and DIA values.')),
+                    const SnackBar(content: Text('กรุณากรอกค่า SYS และ DIA.')),
                   );
                 }
               },
-              child: const Text('Show Pressure Data'),
+              child: const Text('แสดงข้อมูลความดันโลหิต'),
             ),
           ],
         ),
